@@ -4,15 +4,32 @@ rankhospital<-function(state,outcome,num="best"){
   if(is.na(cols[outcome])){
     stop("invalid outcome")
   }
-  coltoprocess<-cols[outcome]
-  data<-read.csv("outcome-of-care-measures.csv",colClasses="character")
-  data[,coltoprocess]<-as.numeric(data[,coltoprocess])
-  state_data<-data[data[["State"]]==state&!is.na(data[[coltoprocess]]),]
+  col<-cols[outcome]
+  state_data<-outcomes[outcomes[["State"]]==state & !is.na(outcomes[[col]]),]
   if(nrow(state_data)==0){
     stop("invalid state")
   }
   
-  if(num=="best"){
-    print(state_data[state_data[[coltoprocess]]==min(state_data[[coltoprocess]]),2])
+  index<-1
+  dec<-F
+  if(is.character(num)){
+    if(num=="best"){
+      index<-1
+      
+    }
+    else if(num=="worst"){
+      index<-1
+      dec<-T
+    }
+    else{
+     stop("invalid num") 
+    }
   }
+  else{
+    index<-num
+  }
+  
+  state_data[order(state_data[[col]],state_data[["Hospital.Name"]],decreasing=dec)[index],"Hospital.Name"]
+  
+  
 }
