@@ -5,6 +5,8 @@ rankhospital<-function(state,outcome,num="best"){
     stop("invalid outcome")
   }
   col<-cols[outcome]
+  outcomes<-read.csv("outcome-of-care-measures.csv",colClass="character")
+  outcomes[[col]]<-as.numeric(outcomes[[col]])
   state_data<-outcomes[outcomes[["State"]]==state & !is.na(outcomes[[col]]),]
   if(nrow(state_data)==0){
     stop("invalid state")
