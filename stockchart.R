@@ -1,3 +1,5 @@
+## Functions to get the raw stock data from Yahoo using csv and plotting using ggplot
+
 stockdata <- function(ticker){
 	require(ggplot2);
 	url <- paste("http://ichart.finance.yahoo.com/table.csv?s=",ticker,sep="");
